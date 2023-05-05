@@ -121,10 +121,13 @@ class Ruuvitag {
 
       if (!config.disableTemp) {
         if (temperature !== this.temperature) {
-          this.temperature = temperature;
+          const tempOffset = !!config.tempOffset ? config.tempOffset : 0,
+            temp = temperature + tempOffset;
+
+          this.temperature = temp;
           this.tempService
             .getCharacteristic(Characteristic.CurrentTemperature)
-            .updateValue(temperature);
+            .updateValue(temp);
         }
       }
 
